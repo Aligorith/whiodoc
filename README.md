@@ -114,7 +114,7 @@ Parameter lines take a form resembling one of the following:
 ```
 < mode: (eOperationMode) Type of operation to perform
 
-< influence: (float - 0.0 <= f < 1.0) Strength of the effect
+< influence: (float - 0.0 <= v < 1.0) Strength of the effect
 
 < brushes: ([Brush]) List of brushes than can be used
 < brushes_alt: (list[Brush]) Alternative way of describing a list
@@ -242,7 +242,7 @@ have any type annotations at all, and is helpful even after it gained these
    or when it's harder to accurately express the actual intent)/
 
 
-Basic Principles:
+**Basic Principles:**
 * In general, just put the desired type's name into this space
   * "Num" can be used when an int / float type number can be used, with caring
     about the details too much.
@@ -272,7 +272,12 @@ Basic Principles:
   ```
   ({ KeyType : ValueType })
   ```
-  
+
+
+**Range / Unit Specifiers:**
+When dealing with numeric types, it is useful to be able to specify the range
+of values that they apply to, and/or maybe the type of units that they use.
+
 
 ### 4) Description
 
@@ -285,6 +290,9 @@ done for the comment-block's description: i.e.
      interpretation of the Key vs Value types.
 
 Formatting Advice:
+* Descriptions should start with a capital letter, unless referring to some
+  other identifier / variable / keyword that uses a lowercase name instead.
+
 * For multi-line descriptions, the following lines should be intended to line up
   with either the type-specifier on the first line OR the start of the description.
   
@@ -296,7 +304,7 @@ Formatting Advice:
     available line space.
 
 * If type specifiers get really long (or variable-name + type specifier get
-  sufficiently ong), it is ok to have the description start on a new line following 
+  sufficiently long), it is ok to have the description start on a new line following 
   the type-specifier (and in line with the opening paren).
 
 
