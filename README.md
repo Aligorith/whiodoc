@@ -1,7 +1,7 @@
-QuackDoc - Code Documentation Format
+WhioDoc - Code Documentation Format
 ==================================
 
-"QuackDoc" is a documentation format for docstrings and similar comment blocks
+"WhioDoc" is a documentation format for docstrings and similar comment blocks
 for inline documentation of functions / classes / macros / etc. as part of the source 
 code for a project.
 
@@ -28,7 +28,12 @@ A quick contrived example:
 
 For much of the life of this documentation format, it has largely remained nameless,
 with the need for a name only really arising when trying to create a Git repo to
-formally write up a spec for this thing.
+formally write up a spec for this thing. The initial name was "Quack!" in homage to
+how this technique was originally developed for documenting "duck-typed" languages.
+This quickly became "QuackDoc" (to be more easily searchable), at the expense of
+some unfortunate connotations. More recently, it has been renamed "WhioDoc"
+(in honour of NZ's "Blue Duck" - https://www.nzbirdsonline.org.nz/species/blue-duck).
+(NOTE: "Whio" is apparently pronounced "fee-o" instead of "wee-oh")
 
 This document is Version 1.0 of the spec.
 
@@ -36,7 +41,7 @@ This document is Version 1.0 of the spec.
 # Motivations, Influences, and Origins
 
 * Designed as a terser, yet more easily scannable + information rich documentation
-  format than typical "doxygen" or "Javadoc" style documentation formats, and less
+  format than typical "Doxygen" or "Javadoc" style documentation formats, and less
   clunky / ugly than RST or whatever recent versions of Python now recommend.
 
 * It initially evolved organically over two decades of writing Python code
@@ -134,7 +139,7 @@ Parameter lines take a form resembling one of the following:
 ### 1) Initial Bulletpoint
 
 Each line starts with a symbol which indicates what type of IO role it performs:
-* **`<`** - A less-than symbols indicates that the variable is an input-only (read-only)
+* **`<`** - A less-than symbol indicates that the variable is an input-only (read-only)
             variable that is being used to pass information into the function.
 
 * **`>`** - A greater-than symbol indicates that the variable is used to return a value
