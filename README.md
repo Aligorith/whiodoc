@@ -10,7 +10,7 @@ A quick contrived example:
 # Funky blending function
 # < settings: (FunkyBlenderSettings) General settings object for this feature
 #
-# < t: (float - 0.0 <= v < 1.0) Blending factor, controlling the effects
+# < t: (float :: 0.0 <= v < 1.0) Blending factor, controlling the effects
 #      Parameter Value Effects:
 #      * 0.0 <= v < 0.2: Idling mode
 #      * 0.2 <= v < 0.7: Active mode
@@ -35,7 +35,7 @@ some unfortunate connotations. More recently, it has been renamed "WhioDoc"
 (in honour of NZ's "Blue Duck" - https://www.nzbirdsonline.org.nz/species/blue-duck).
 (NOTE: "Whio" is apparently pronounced "fee-o" instead of "wee-oh")
 
-This document is Version 1.0 of the spec.
+This document is Version 1.1 of the spec.
 
 
 # Motivations, Influences, and Origins
@@ -119,7 +119,7 @@ Parameter lines take a form resembling one of the following:
 ```
 < mode: (eOperationMode) Type of operation to perform
 
-< influence: (float - 0.0 <= v < 1.0) Strength of the effect
+< influence: (float :: 0.0 <= v < 1.0) Strength of the effect
 
 < brushes: ([Brush]) List of brushes than can be used
 < brushes_alt: (list[Brush]) Alternative way of describing a list
@@ -283,6 +283,53 @@ have any type annotations at all, and is helpful even after it gained these
 When dealing with numeric types, it is useful to be able to specify the range
 of values that they apply to, and/or maybe the type of units that they use.
 
+* When there's just a single value needing a range, use the following constructions:
+  * **Variant 1:** Range of values, where the value ("v") should always be between a number "A" and another number "C"
+    ```
+    (Num :: A <= v <= C)
+    ```
+    
+    Examples:
+    * `(float :: 0.0 <= v <= 1.0)`
+    * `(int :: 1 <= v < 256)`
+    * `(Num :: -5 < v < 5)`
+    
+    Notes:
+    * `<` and `<=` can be used as needed to make either endpoint inclusive or not
+    * The order *MUST* always be from low to high.
+  
+  * **Variant 2:** Lower Bound ("A") on Value ("v").  (NOTE: Use "uint" for "v >= 0" cases when only positive-integers are needed)
+    ```
+    (Num :: v >= A)
+    ```
+    
+    Notes:
+    * The equality sign can be either `>` or `>=` as necessary
+    * The `v` *MUST* appear on the LHS of the expression
+    * This is mostly used for either specifying 0/1 indexing, and/or other similar types of signed-values
+    
+  * **Variant 3:** Upper Bound ("B") on Value ("v").
+    ```
+    (Num :: v <= B)
+    ```
+    Notes:
+    * This is rarely needed / used in isolation (i.e. usually you'll need to use a range instead anyway). It is only included here for completeness.
+    * The same rules apply as for Variant 2.
+
+* When the ranged-value is part of a more complex description (e.g. key:value pairs, or inside list definition / etc.),
+  the range specifier should NOT be part of the signature, but should instead be supplied in the description.
+  
+  > **Aside - Code Quality / Maintainability Tip:**  
+  > This area has traditionally not been well explored / covered in historical usage of this documentation format,
+  > as the need for complex specifiers here is usually an indication of a "bad" API definition that will cause
+  > problems down the track. Specifically, in many cases, it's better to make proper type defines for these things,
+  > which means that the simpler type alias can just be used in the type specifier, thus avoiding most of the
+  > problems in the first place.
+  
+  See notes on "Description" text below for more details.
+
+* **TODO**: Units Support
+
 
 ### 4) Description
 
@@ -312,6 +359,21 @@ Formatting Advice:
   sufficiently long), it is ok to have the description start on a new line following 
   the type-specifier (and in line with the opening paren).
 
+
+**Descriptions for Complex Type Specifiers:**
+This section covers what should happen for more complex type specifiers with sub-types (e.g. key:value pairs, list/collection definitions with nested types / alternatives, etc.)
+
+> **TODO**: There is currently no established standard for this. More details will be added to a future version of this spec when best-practice is established.
+>
+> Draft Rules:
+> * When there's just a single value/type, just include a "Range:" tag on a new line/paragraph after the normal text-descriptions, and put the range-specifier beside that
+> * When there are multiple values/types:
+>   * 1) Break down each part of the complex specifier into a bullet-point tree (one bullet-point per item), and breaking down further within that tree
+>   * 2) The key idea here is to maintain the general principles we are using here:
+>        i.e. 
+>        * i) **WHAT** info we are dealing with,
+>        * ii) **WHY** it's useful / necessary to supply, and 
+>        * iii) **WHAT** constraints / limits apply to them.
 
 
 # Versioning and Attribution
