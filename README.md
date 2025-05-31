@@ -202,13 +202,15 @@ The only things to mention here:
   ```
   GOOD:
   < varNameDynamicType: (int) For dynamically typed languages (e.g. Python)
-  < varNameTyped: For c-like languages
+  < varNameTyped: For c-like "explicitly-typed" languages, where the types are redundant
   
   BAD:
   < varName : (eFooBar) There shouldn't be a space after the variable name
   
   <varName:(ContextState)Everything compact like this is also really bad
   <varName: (ContextState) Better but still also bad
+  <varName : (ContextState) Nah! Don't do that...
+  <varName :(ContextState) Uggh! What is this?!
   ```
   
   NOTE: Whether this still applies in the case of variable-names ending in underscores
@@ -271,7 +273,14 @@ have any type annotations at all, and is helpful even after it gained these
     ```
     (list[ElementTypename])
     ```
-  * NOTE: It is permissible to use this syntax recursively
+  * It is permissible to use this syntax recursively, e.g.
+    ```
+    (list[dict[str, ToolFlags]])
+    ({ str : { str : StateHandler } })
+    ```
+    NOTE: However, in such cases, you're almost better explicitly declaring those
+          nested / inline types separately and using that alias (see "Complex Type
+          Specifier" notes below).
   
 * For mappings / dicts:
   ```
@@ -333,7 +342,7 @@ of values that they apply to, and/or maybe the type of units that they use.
 
 ### 4) Description
 
-The descriptive text for each parameter follows a similar pattern to whatis
+The descriptive text for each parameter follows a similar pattern to what is
 done for the comment-block's description: i.e. 
 * 1) Short description of what the variable is for
 * 2) More detailed descriptions of the valid values OR the interpretation of
